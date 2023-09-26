@@ -23,26 +23,47 @@ class MainActivity : AppCompatActivity() {
         val passWord = findViewById<EditText>(R.id.pass_word)
 
         val submit_btn = findViewById<Button>(R.id.submit_btn)
-
         submit_btn.setOnClickListener {
+            emailId.error
 
             val userValue = userName.text
             val email_id = emailId.text
             val pass_word = passWord.text
+            val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+            val regex = Regex(emailPattern)
 
-            if(userValue.length!=0 && email_id.length!=0 && pass_word.length!=0){
+            if(userValue.length!=0 ){
 
-                val combinedtext: String = "$userValue with emailid:- $email_id and password:- $pass_word"
+                if(email_id.length!=0){
+                    if(regex.matches(email_id) ){
 
-                display.text = combinedtext
+                        if(  pass_word.length!=0){
 
-                userName.setText("")
-                emailId.setText("")
-                passWord.setText("")
+                            val combinedtext: String = "$userValue with emailid:- $email_id and password:- $pass_word"
+
+                            display.text = combinedtext
+
+                            userName.setText("")
+                            emailId.setText("")
+                            passWord.setText("")
+                        }else{
+
+                            display.text = "Fill in all the Details"
+                        }
+
+                    }else{
+                        display.text = "Invalid EmailId format"
+                    }
+                }else{
+                    display.text = "Fill in all the Details"
+                }
+
             }else{
-
                 display.text = "Fill in all the Details"
             }
+
+
+
 
 
 
